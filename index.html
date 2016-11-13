@@ -1,8 +1,17 @@
 <!DOCTYPE html>
+<head>
 <meta charset="utf-8">
+
+<link rel="stylesheet" href="bower_components/foundation/css/foundation.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/app.css"> -->
+<script src="bower_components/modernizr/modernizr.js"></script>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+
 <style>
 body {
   font-family: Helvetica, sans-serif;
+  z-index: 9;
 }
 svg {
   position: absolute;
@@ -12,15 +21,72 @@ svg {
 }
 image.node {
     cursor: pointer;
+} 
+
+.dog-container {
+  float: right;
+  height: 300px;
+  width: 40%;
+  border: 3px double black;
+  margin-top: 15px;
+  padding: 5px;
 }
+
+.dog-container img {
+  float: left;
+  border: 2px solid black;
+}
+
+.stats-container {
+  padding-left: 5px;
+  display: inline-block;
+  width: 50%;
+  height: 100%;
+}
+
+.dogMatrix {
+  z-index: 99;
+  height: 2000;
+}
+
 </style>
-<body>
+</head>
+
+<body ng-app="app" ng-cloak ng-controller="mainCntrl">
+  <h1>//</h1>
+  <br>
 Sort by
 <a href="#" class="sort-btn" data-sort="id">id</a> /
 <a href="#" class="sort-btn" data-sort="intel">intel</a> /
 <a href="#" class="sort-btn" data-sort="longetevity">longetevity</a> /
 <a href="#" class="sort-btn" data-sort="size">size</a> /
 <a href="#" class="sort-btn" data-sort="color">color</a>
+
+  <div class="dog-container pull-right">
+    <img src="dog-img/akitas.jpg"></img>
+    <div class="stats-container">
+      <p id="breed">Breed: <span id="breed-text">Shiba Inu</span></p>
+      <p id="classification">Classification: <span id="class-text">Toy</span></p>
+      <p id="country">Country of Origin: <span id="country-text">Japan</span></p>
+      <p id="intelligence">Intelligence Rank: <span id="intel-text">1</span></p>
+      <p id="longevity">Longevity: <span id="longe-text">10</span> Years</p>
+      <p id="size">Size: <span id="size-text">Medium</span></p>
+    </div>
+
+    <div class="large-12 small-6 columns" role="content">
+        <article>
+          <chord-diagram></chord-diagram>
+        </article>
+    </div>
+
+  </div>
+
+  <!-- <div class="large-12 small-6 columns" role="content">
+    <article>
+      <chord-diagram></chord-diagram>
+    </article>
+  </div> -->
+
 <script src="js/d3.v3.min.js"></script>
 <script src="js/d3-grid.js"></script>
 <script src="js/d3-comparator.js"></script>
@@ -53,9 +119,7 @@ var sortBy = {
     .order(d3.descending, function(d) { return d.size; })
     .order(d3.ascending, function(d) { return d.id; }),
   size: d3.comparator()
-    .order(d3.descending, function(d) { return d.size; })
-    .order(d3.ascending, function(d) { return d.color; })
-    .order(d3.ascending, function(d) { return d.id; })
+    .order(d3.ascending, function(d) { return d.size; }),
 };
 
 var data = [
@@ -78,7 +142,7 @@ var data = [
     "grooming": 1,
     "kids": 1,
     "akc_rating": 88,
-    "size": "large",
+    "size": 3,
     "learningRate": "80-100",
     "Obedience": "<25"
   },
@@ -101,7 +165,7 @@ var data = [
     "grooming": 2,
     "kids": 1,
     "akc_rating": 43,
-    "size": "large",
+    "size": 3,
     "learningRate": "15-25",
     "Obedience": ">70"
   },
@@ -124,7 +188,7 @@ var data = [
     "grooming": "-",
     "kids": "-",
     "akc_rating": "",
-    "size": "small",
+    "size": 1,
     "learningRate": "40-80",
     "Obedience": ">30"
   },
@@ -147,7 +211,7 @@ var data = [
     "grooming": 1,
     "kids": 2,
     "akc_rating": 68,
-    "size": "medium",
+    "size": 2,
     "learningRate": "80-100",
     "Obedience": "<25"
   },
@@ -170,7 +234,7 @@ var data = [
     "grooming": 2,
     "kids": 1,
     "akc_rating": 26,
-    "size": "medium",
+    "size": 2,
     "learningRate": "40-80",
     "Obedience": ">30"
   },
@@ -186,14 +250,14 @@ var data = [
     "cost": "na",
     "cost-percent": "",
     "intelligence": 51,
-    "longevity": "na",
+    "longevity": 10,
     "flaws": 4,
     "price": "$840",
     "food": "",
     "grooming": "-",
     "kids": "-",
     "akc_rating": "",
-    "size": "medium",
+    "size": 2,
     "learningRate": "25-40",
     "Obedience": ">50"
   },
@@ -216,7 +280,7 @@ var data = [
     "grooming": 1,
     "kids": 1,
     "akc_rating": 11,
-    "size": "small",
+    "size": 1,
     "learningRate": "80-100",
     "Obedience": "<25"
   },
@@ -239,7 +303,7 @@ var data = [
     "grooming": 2,
     "kids": 1,
     "akc_rating": 73,
-    "size": "medium",
+    "size": 2,
     "learningRate": "15-25",
     "Obedience": ">70"
   },
@@ -262,7 +326,7 @@ var data = [
     "grooming": 2,
     "kids": 1,
     "akc_rating": 41,
-    "size": "small",
+    "size": 1,
     "learningRate": "80-100",
     "Obedience": "<25"
   },
@@ -285,7 +349,7 @@ var data = [
     "grooming": 2,
     "kids": 1,
     "akc_rating": 18,
-    "size": "medium",
+    "size": 2,
     "learningRate": "40-80",
     "Obedience": ">30"
   },
@@ -308,7 +372,7 @@ var data = [
     "grooming": 2,
     "kids": 2,
     "akc_rating": 8,
-    "size": "medium",
+    "size": 2,
     "learningRate": "<5",
     "Obedience": ">95"
   },
@@ -331,7 +395,7 @@ var data = [
     "grooming": 2,
     "kids": 1,
     "akc_rating": 7,
-    "size": "medium",
+    "size": 2,
     "learningRate": "25-40",
     "Obedience": ">50"
   },
@@ -354,7 +418,7 @@ var data = [
     "grooming": 2,
     "kids": 3,
     "akc_rating": 9,
-    "size": "small",
+    "size": 1,
     "learningRate": "25-40",
     "Obedience": ">50"
   },
@@ -377,7 +441,7 @@ var data = [
     "grooming": 2,
     "kids": 2,
     "akc_rating": 13,
-    "size": "large",
+    "size": 3,
     "learningRate": "<5",
     "Obedience": ">95"
   },
@@ -400,7 +464,7 @@ var data = [
     "grooming": 2,
     "kids": 2,
     "akc_rating": 2,
-    "size": "large",
+    "size": 3,
     "learningRate": "<5",
     "Obedience": ">95"
   },
@@ -423,7 +487,7 @@ var data = [
     "grooming": 2,
     "kids": 2,
     "akc_rating": 12,
-    "size": "small",
+    "size": 1,
     "learningRate": "5-15",
     "Obedience": ">85"
   },
@@ -446,7 +510,7 @@ var data = [
     "grooming": 2,
     "kids": 1,
     "akc_rating": 115,
-    "size": "large",
+    "size": 3,
     "learningRate": "25-40",
     "Obedience": ">50"
   },
@@ -469,7 +533,7 @@ var data = [
     "grooming": 2,
     "kids": 2,
     "akc_rating": 10,
-    "size": "large",
+    "size": 3,
     "learningRate": "<5",
     "Obedience": ">95"
   },
@@ -492,7 +556,7 @@ var data = [
     "grooming": 2,
     "kids": 3,
     "akc_rating": 47,
-    "size": "large",
+    "size": 3,
     "learningRate": "25-40",
     "Obedience": ">50"
   },
@@ -515,7 +579,7 @@ var data = [
     "grooming": "-",
     "kids": "-",
     "akc_rating": "",
-    "size": "small",
+    "size": 1,
     "learningRate": "40-80",
     "Obedience": ">30"
   },
@@ -538,7 +602,7 @@ var data = [
     "grooming": 2,
     "kids": 2,
     "akc_rating": 151,
-    "size": "medium",
+    "size": 2,
     "learningRate": "15-25",
     "Obedience": ">70"
   },
@@ -561,7 +625,7 @@ var data = [
     "grooming": 2,
     "kids": 3,
     "akc_rating": 14,
-    "size": "small",
+    "size": 1,
     "learningRate": "40-80",
     "Obedience": ">30"
   },
@@ -584,7 +648,7 @@ var data = [
     "grooming": 1,
     "kids": 1,
     "akc_rating": 117,
-    "size": "medium",
+    "size": 2,
     "learningRate": "25-40",
     "Obedience": ">50"
   },
@@ -607,7 +671,7 @@ var data = [
     "grooming": 2,
     "kids": 2,
     "akc_rating": 17,
-    "size": "small",
+    "size": 1,
     "learningRate": "5-15",
     "Obedience": ">85"
   },
@@ -630,7 +694,7 @@ var data = [
     "grooming": 3,
     "kids": 1,
     "akc_rating": 16,
-    "size": "medium",
+    "size": 2,
     "learningRate": "25-40",
     "Obedience": ">50"
   },
@@ -653,7 +717,7 @@ var data = [
     "grooming": 1,
     "kids": 1,
     "akc_rating": 39,
-    "size": "small",
+    "size": 1,
     "learningRate": "25-40",
     "Obedience": ">50"
   },
@@ -676,7 +740,7 @@ var data = [
     "grooming": 2,
     "kids": 1,
     "akc_rating": 34,
-    "size": "large",
+    "size": 3,
     "learningRate": "5-15",
     "Obedience": ">85"
   },
@@ -699,7 +763,7 @@ var data = [
     "grooming": 1,
     "kids": 1,
     "akc_rating": 49,
-    "size": "large",
+    "size": 3,
     "learningRate": "40-80",
     "Obedience": ">30"
   },
@@ -722,7 +786,7 @@ var data = [
     "grooming": 2,
     "kids": 1,
     "akc_rating": "",
-    "size": "large",
+    "size": 3,
     "learningRate": "na",
     "Obedience": "na"
   },
@@ -745,7 +809,7 @@ var data = [
     "grooming": "-",
     "kids": "-",
     "akc_rating": "",
-    "size": "medium",
+    "size": 2,
     "learningRate": "15-25",
     "Obedience": ">70"
   },
@@ -768,7 +832,7 @@ var data = [
     "grooming": 1,
     "kids": 1,
     "akc_rating": 3,
-    "size": "small",
+    "size": 1,
     "learningRate": "80-100",
     "Obedience": "<25"
   },
@@ -791,7 +855,7 @@ var data = [
     "grooming": 2,
     "kids": 3,
     "akc_rating": 45,
-    "size": "medium",
+    "size": 2,
     "learningRate": "<5",
     "Obedience": ">95"
   },
@@ -814,7 +878,7 @@ var data = [
     "grooming": 2,
     "kids": 2,
     "akc_rating": 51,
-    "size": "medium",
+    "size": 2,
     "learningRate": "40-80",
     "Obedience": ">30"
   },
@@ -837,7 +901,7 @@ var data = [
     "grooming": 2,
     "kids": 2,
     "akc_rating": 6,
-    "size": "medium",
+    "size": 2,
     "learningRate": "80-100",
     "Obedience": "<25"
   },
@@ -860,32 +924,9 @@ var data = [
     "grooming": 2,
     "kids": 1,
     "akc_rating": 40,
-    "size": "large",
+    "size": 3,
     "learningRate": "40-80",
     "Obedience": ">30"
-  },
-  {
-    "id": 36,
-    "country": "United Kingdom",
-    "group": "sporting",
-    "breed": "Cocker Spaniel",
-    "src": "icons/cocker-spaniel.svg",
-    "srcHover": "icon-heads/cocker-spaniel.svg",
-    "score": 3.3,
-    "popularity": 27,
-    "cost": "$24,330",
-    "cost-percent": "9%",
-    "intelligence": 20,
-    "longevity": 12.5,
-    "flaws": 2,
-    "price": "$465",
-    "food": "$674",
-    "grooming": 2,
-    "kids": 1,
-    "akc_rating": 27,
-    "size": "small",
-    "learningRate": "5-15",
-    "Obedience": ">85"
   },
   {
     "id": 37,
@@ -899,14 +940,14 @@ var data = [
     "cost": "na",
     "cost-percent": "",
     "intelligence": 16,
-    "longevity": "na",
+    "longevity": 15,
     "flaws": 2,
     "price": "$650",
     "food": "",
     "grooming": "-",
     "kids": "-",
     "akc_rating": "",
-    "size": "large",
+    "size": 3,
     "learningRate": "5-15",
     "Obedience": ">85"
   },
@@ -929,7 +970,7 @@ var data = [
     "grooming": 2,
     "kids": 1,
     "akc_rating": 63,
-    "size": "medium",
+    "size": 2,
     "learningRate": "5-15",
     "Obedience": ">85"
   },
@@ -952,35 +993,12 @@ var data = [
     "grooming": 2,
     "kids": 1,
     "akc_rating": 140,
-    "size": "large",
+    "size": 3,
     "learningRate": "25-40",
     "Obedience": ">50"
   },
   {
     "id": 40,
-    "country": "United Kingdom",
-    "group": "terrier",
-    "breed": "Jack Russell Terrier",
-    "src": "icons/jack-russell-terrier.svg",
-    "srcHover": "icon-heads/jack-russell-terrier.svg",
-    "score": "",
-    "popularity": "",
-    "cost": "",
-    "cost-percent": "",
-    "intelligence": "",
-    "longevity": "",
-    "flaws": "",
-    "price": "",
-    "food": "",
-    "grooming": "",
-    "kids": "",
-    "akc_rating": "",
-    "size": "",
-    "learningRate": "",
-    "Obedience": ""
-  },
-  {
-    "id": 41,
     "country": "United Kingdom",
     "group": "working",
     "breed": "Mastiff",
@@ -998,12 +1016,12 @@ var data = [
     "grooming": 2,
     "kids": 1,
     "akc_rating": 28,
-    "size": "large",
+    "size": 3,
     "learningRate": "80-100",
     "Obedience": "<25"
   },
   {
-    "id": 42,
+    "id": 41,
     "country": "United Kingdom",
     "group": "toy",
     "breed": "Yorkshire Terrier",
@@ -1021,12 +1039,12 @@ var data = [
     "grooming": 1,
     "kids": 3,
     "akc_rating": 5,
-    "size": "small",
+    "size": 1,
     "learningRate": "15-25",
     "Obedience": ">70"
   },
   {
-    "id": 43,
+    "id": 42,
     "country": "United States",
     "group": "working",
     "breed": "Alaskan Malamute",
@@ -1044,12 +1062,12 @@ var data = [
     "grooming": 1,
     "kids": 2,
     "akc_rating": 58,
-    "size": "large",
+    "size": 3,
     "learningRate": "25-40",
     "Obedience": ">50"
   },
   {
-    "id": 44,
+    "id": 43,
     "country": "United States",
     "group": "terrier",
     "breed": "American Staffordshire Terrier",
@@ -1060,19 +1078,19 @@ var data = [
     "cost": "na",
     "cost-percent": "",
     "intelligence": 34,
-    "longevity": "na",
+    "longevity": 11,
     "flaws": 1,
     "price": "$1,043",
     "food": "",
     "grooming": "-",
     "kids": "-",
     "akc_rating": "",
-    "size": "medium",
+    "size": 2,
     "learningRate": "15-25",
     "Obedience": ">70"
   },
   {
-    "id": 45,
+    "id": 44,
     "country": "Wales",
     "group": "herding",
     "breed": "Corgi",
@@ -1090,7 +1108,7 @@ var data = [
     "grooming": 2,
     "kids": 1,
     "akc_rating": 25,
-    "size": "small",
+    "size": 1,
     "learningRate": "5-15",
     "Obedience": ">85"
   }
@@ -1102,7 +1120,7 @@ var svg = d3.select("body").append("svg")
     height: height
   })
 .append("g")
-  .attr("transform", "translate(20,20)");
+  .attr("transform", "translate(20,120)");
 
 d3.selectAll(".sort-btn")
   .on("click", function(d) {
@@ -1113,16 +1131,34 @@ d3.selectAll(".sort-btn")
 
 update();
 
+function updateStat(id) {
+
+  document.getElementById("breed-text").innerHTML = data[id].breed;
+  document.getElementById("class-text").innerHTML = data[id].group;
+  document.getElementById("country-text").innerHTML = data[id].country;
+  document.getElementById("intel-text").innerHTML = data[id].intelligence;
+  document.getElementById("longe-text").innerHTML = data[id].longevity;
+  // <p id="breed">Breed: <span id="breed-text">Shiba Inu</span></p>
+  //   <p id="classification">Classification: <span id="class-text">Toy</span></p>
+  //   <p id="country">Country of Origin: <span id="country-text">Japan</span></p>
+  //   <p id="intelligence">Intelligence Rank: <span id="intel-text">1</span></p>
+  //   <p id="longevity">Longevity: <span id="longe-text">10</span> Years</p>
+  //   <p id="size">Size:
+
+}
+
 function update() {
   var node = svg.selectAll(".node")
     .data(grid(data), function(d) { return d.id; });
   node.enter().append("image")
+    .attr("id", function(d) { return (d.id -1);})
     .attr("class", "node")
     .attr("xlink:href", function(d) {
     return d.src;
     })
     .on("mouseover", function(d) {d3.select(this).attr("xlink:href", d.srcHover); d3.select(this).style("opacity", "0.5");})
     .on("mouseout", function(d) {d3.select(this).attr("xlink:href", d.src); d3.select(this).style("opacity", "1");})
+    .on("click", function() { updateStat(d3.select(this).attr("id")); })
     .attr("x", 10)
     .attr("y", 10) 
     .attr("width", 80)
@@ -1133,3 +1169,27 @@ function update() {
 }
  
 </script>
+
+<!-- <script src="bower_components/d3/d3.min.js"></script> -->
+<script src="bower_components/foundation/js/foundation.min.js"></script>
+<script src="js/mainController.js"></script>
+<script src="js/matrixFactory.js"></script>
+<script src="js/chordDirective.js"></script>
+
+<script>
+function dimChordz(id) {
+        //d3.event.preventDefault();
+        //d3.event.stopPropagation();
+        var chords = document.getElementsByClassName("chords");
+        [].forEach.call(chords, function (p){
+          //if (d.source) { // COMPARE CHORD IDS
+            console.log(p._id);
+          p.style.opacity = (p._id === id) ? 0.5: 0.1;
+          // } else { // COMPARE GROUP IDS
+          //   return (p.source._id === d._id || p.target._id === d._id) ? 0.9: 0.1;
+          // }
+        });
+      }
+</script>
+
+</body>
