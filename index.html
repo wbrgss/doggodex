@@ -18,16 +18,16 @@ Sort by
 <a href="#" class="sort-btn" data-sort="longetevity">longetevity</a> /
 <a href="#" class="sort-btn" data-sort="size">size</a> /
 <a href="#" class="sort-btn" data-sort="color">color</a>
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="js/d3.v3.min.js"></script>
 <script src="js/d3-grid.js"></script>
 <script src="js/d3-comparator.js"></script>
 <script>
 
-var width = 90,
-    height = 1500;
+var width = 60,
+    height = 1000;
 
 var grid = d3.layout.grid()
-  .size([800, 800]);
+  .size([600, 800]);
 
 var color = d3.scale.linear()
   .interpolate(d3.interpolateHcl)
@@ -1053,7 +1053,7 @@ var svg = d3.select("body").append("svg")
     height: height
   })
 .append("g")
-  .attr("transform", "translate(180,50)");
+  .attr("transform", "translate(20,20)");
 
 d3.selectAll(".sort-btn")
   .on("click", function(d) {
